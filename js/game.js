@@ -226,7 +226,4 @@ function gameOver() {
     console.log("GG");
 }
 
-document.querySelector("#start").addEventListener("click", () => {
-
     init(cnv.width, cnv.height);
-})

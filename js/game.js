@@ -39,8 +39,6 @@ const ControllerMenu = new Button({
         }
     },
 });
-ControllerMenu.init();
-ControllerPanorama.init();
 
 const cnv = document.querySelector("canvas");
 cnv.width = "2000";
@@ -57,52 +55,30 @@ let player;
 let platforms = [];
 let asteroids = [];
 
-/*
-document.addEventListener("keydown", (event) => {
-    if (event.key == "w") {
-        if (player.isGrounded) {
-            player.jump();
-        }
-    }
-    if (event.key == "a") {
-        rightKey = true;
-    }
-    if (event.key == "d") {
-        leftKey = true;
-    }
 
-})
-document.addEventListener("keyup", (event) => {
-    if (event.key == "a") {
-        rightKey = false;
-    }
-    if (event.key == "d") {
-        leftKey = false;
-    }
-
-})*/
 
 
 let oldTime = 0;
 function gameLoop(time) {
     let deltaTime = time - oldTime;
     deltaTime /= 40;
-    if (deltaTime > 0.3)
-    {
-        deltaTime = 0.3;
+    if (deltaTime > 0.4) {
+        deltaTime = 0.4;
     }
-    /*
-    if (rightKey) {
-        player.velocityX = -Player.moveSpeed;
-    }
+    if (!isMobile()) {
 
-    if (leftKey) {
-        player.velocityX = Player.moveSpeed;
-    }
+        if (rightKey) {
+            player.velocityX = -Player.moveSpeed;
+        }
 
-    if (rightKey && leftKey || !rightKey && !leftKey) {
-        player.velocityX = 0;
-    }*/
+        if (leftKey) {
+            player.velocityX = Player.moveSpeed;
+        }
+
+        if (rightKey && leftKey || !rightKey && !leftKey) {
+            player.velocityX = 0;
+        }
+    }
 
     if (!isNaN(deltaTime) && oldTime > 400) {
         updateGame(deltaTime);
@@ -158,7 +134,7 @@ function createAsteroid() {
         let side = random(0, 2);
         asteroids = new Asteroid(
             side == 0 ? 0 : 2 * scale - Asteroid.width - 10,
-            random(1, scale/2 - 1));
+            random(1, scale / 2 - 1));
     }
     else {
         asteroids = new Asteroid(
@@ -174,7 +150,6 @@ function createAsteroid() {
 
     return asteroids;
 }
-
 
 function renderGame() {
     ctx.clearRect(0, 0, cnv.width, cnv.height);
@@ -202,7 +177,36 @@ function renderGame() {
 }
 
 function init(width, height) {
+    if (isMobile()) {
 
+        ControllerMenu.init();
+        ControllerPanorama.init();
+    } else {
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key == "w") {
+                if (player.isGrounded) {
+                    player.jump();
+                }
+            }
+            if (event.key == "a") {
+                rightKey = true;
+            }
+            if (event.key == "d") {
+                leftKey = true;
+            }
+
+        })
+        document.addEventListener("keyup", (event) => {
+            if (event.key == "a") {
+                rightKey = false;
+            }
+            if (event.key == "d") {
+                leftKey = false;
+            }
+
+        })
+    }
     scale = Math.min(height, width / 2);
     Player.gravity = scale * 0.015;
     Player.width = scale * 0.04;
@@ -227,5 +231,10 @@ function init(width, height) {
 function gameOver() {
     window.location.href = "index.html";
     console.log("GG");
+}
+
+function isMobile() {
+    const regex = /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+    return regex.test(navigator.userAgent);
 }
 init(cnv.width, cnv.height);

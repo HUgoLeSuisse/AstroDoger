@@ -87,10 +87,9 @@ let oldTime = 0;
 function gameLoop(time) {
     let deltaTime = time - oldTime;
     deltaTime /= 40;
-    console.log(deltaTime);
-    if (deltaTime > 0.4)
+    if (deltaTime > 0.3)
     {
-        deltaTime = 0.4;
+        deltaTime = 0.3;
     }
     /*
     if (rightKey) {

@@ -87,7 +87,11 @@ let oldTime = 0;
 function gameLoop(time) {
     let deltaTime = time - oldTime;
     deltaTime /= 40;
-
+    console.log(deltaTime);
+    if (deltaTime > 0.4)
+    {
+        deltaTime = 0.4;
+    }
     /*
     if (rightKey) {
         player.velocityX = -Player.moveSpeed;
@@ -225,5 +229,4 @@ function gameOver() {
     window.location.href = "index.html";
     console.log("GG");
 }
-
-    init(cnv.width, cnv.height);
+init(cnv.width, cnv.height);

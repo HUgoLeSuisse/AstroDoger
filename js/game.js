@@ -158,7 +158,7 @@ function createAsteroid() {
         let side = random(0, 2);
         asteroids = new Asteroid(
             side == 0 ? 0 : 2 * scale - Asteroid.width - 10,
-            random(1, scale - 1));
+            random(1, scale/2 - 1));
     }
     else {
         asteroids = new Asteroid(
